@@ -8,6 +8,7 @@ mod test {
 
     #[test]
     fn test_parse_varlen() {
+        // Test cases from http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html section 1.1
         assert_eq!((0, 1), parse_varlen(&[0x00]));
         assert_eq!((0x40, 1), parse_varlen(&[0x40]));
         assert_eq!((0x7F, 1), parse_varlen(&[0x7F]));
