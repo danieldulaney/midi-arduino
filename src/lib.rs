@@ -1,4 +1,4 @@
-mod midi;
+mod parse;
 
-pub use midi::Chunk;
-pub use midi::Parser;
+pub use parse::Chunk;
+pub use parse::Parser;
