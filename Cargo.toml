@@ -1,0 +1,6 @@
+[package]
+name = "midi-arduino"
+version = "0.1.0"
+authors = ["Daniel Dulaney <dulaney.daniel@gmail.com>"]
+
+[dependencies]
