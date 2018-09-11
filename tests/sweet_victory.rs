@@ -1,6 +1,6 @@
 extern crate midi_arduino;
 
-use midi_arduino::{Division, Format, Header, Parser};
+use midi_arduino::{Division, Format, Header, MessageParser, Parser};
 
 static SWEET_VICTORY_DATA: &'static [u8] = include_bytes!("data/sweet_victory.mid");
 
@@ -8,9 +8,9 @@ static SWEET_VICTORY_DATA: &'static [u8] = include_bytes!("data/sweet_victory.mi
 fn sweet_victory() {
     let data = SWEET_VICTORY_DATA.to_vec();
 
-    let mut parser = Parser::new(&data);
+    let mut chunk_parser = Parser::new(&data);
 
-    let header_chunk = parser.next().unwrap();
+    let header_chunk = chunk_parser.next().unwrap();
     let header: Header = header_chunk.into();
 
     println!("{:?}", header);
@@ -23,8 +23,18 @@ fn sweet_victory() {
         }
     );
 
-    for chunk in parser {
-        println!("Type: {:?}, Length: {:?}", chunk.kind(), chunk.data_len());
+    for chunk in chunk_parser {
+        println!(
+            "Encountered chunk with type {:?} and length {}",
+            chunk.kind(),
+            chunk.data_len()
+        );
+
+        let mut message_parser: MessageParser = chunk.into();
+
+        for message in message_parser {
+            println!("{:?}", message);
+        }
     }
 
     unimplemented!();
