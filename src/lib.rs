@@ -1,5 +1,6 @@
-mod parse;
+mod header;
+mod chunk;
 mod varlen;
 
-pub use parse::Chunk;
-pub use parse::Parser;
+pub use chunk::Chunk;
+pub use chunk::Parser;
