@@ -1,5 +1,42 @@
+use std;
+use std::iter::Iterator;
+
+/// Takes a slice beginning with a MIDI varlen; returns a u64 containing the
+/// decoded number and the number of bytes that encoding took up.
+///
+/// # Panics
+///
+/// Panics if passed a zero-length slice, or if the number to decode exceeds a
+/// u64.
 pub fn parse_varlen(data: &[u8]) -> (u64, usize) {
-    unimplemented!()
+    if data.len() == 0 {
+        panic!("Zero-length data tried to parse as varlen");
+    }
+
+    let mut last_byte = std::usize::MAX;
+
+    for byte in 0.. {
+        last_byte = byte;
+
+        if data[byte as usize] & 0x80 == 0 {
+            break;
+        }
+    }
+
+    let mut result: u64 = 0;
+
+    for index in 0..=last_byte {
+        // Shift each byte over 7 more
+        let shift_amount = 7 * (last_byte - index);
+
+        // Mask off the first bit, upcast to u64, then shift by the given amount
+        let shifted_byte = ((data[index] & 0x7F) as u64) << shift_amount;
+
+        // Put this step into the result
+        result = result | shifted_byte;
+    }
+
+    return (result, last_byte + 1);
 }
 
 #[cfg(test)]
