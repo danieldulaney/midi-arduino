@@ -1,5 +1,6 @@
 use byteorder::{BigEndian, ByteOrder};
 use chunk::{Chunk, ChunkKind};
+use std::convert::From;
 
 #[derive(Debug, PartialEq)]
 pub struct Header {
@@ -20,8 +21,8 @@ pub enum Division {
     QuarterTicks(u16),
 }
 
-impl Header {
-    pub fn from_chunk<'d>(chunk: Chunk<'d>) -> Header {
+impl<'d> From<Chunk<'d>> for Header {
+    fn from(chunk: Chunk<'d>) -> Header {
         if chunk.kind() != ChunkKind::Header {
             panic!("Tried to parse {:?} chunk as a header", chunk.kind());
         }
@@ -87,7 +88,7 @@ mod tests {
             division: QuarterTicks(16),
         };
 
-        assert_eq!(header_0_1_16, Header::from_chunk(chunk_0_1_16));
+        assert_eq!(header_0_1_16, chunk_0_1_16.into());
     }
 
     #[test]

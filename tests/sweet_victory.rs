@@ -11,7 +11,7 @@ fn sweet_victory() {
     let mut parser = Parser::new(&data);
 
     let header_chunk = parser.next().unwrap();
-    let header = Header::from_chunk(header_chunk);
+    let header: Header = header_chunk.into();
 
     println!("{:?}", header);
     assert_eq!(
