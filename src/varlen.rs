@@ -1,5 +1,4 @@
 use std;
-use std::iter::Iterator;
 
 /// Takes a slice beginning with a MIDI varlen; returns a u64 containing the
 /// decoded number and the number of bytes that encoding took up.
