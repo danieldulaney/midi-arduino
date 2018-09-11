@@ -27,16 +27,12 @@ pub struct Chunk<'d> {
 
 impl<'d> Chunk<'d> {
     pub fn from_data(data: &'d [u8]) -> Result<Chunk<'d>, String> {
-        println!("Getting chunk from data length {}", data.len());
-
         if data.len() < 8 {
             return Err("Not enough data to read a chunk header".to_owned());
         }
 
         let kind = ChunkKind::from_data(data);
         let length: usize = BigEndian::read_u32(&data[4..]) as usize;
-
-        println!("Chunk has kind {:?} and length {}", kind, length);
 
         if data.len() - 8 < length {
             return Err("Chunk length field exceeds remaining data".to_owned());
