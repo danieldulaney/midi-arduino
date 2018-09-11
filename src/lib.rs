@@ -5,4 +5,4 @@ pub mod header;
 mod varlen;
 
 pub use chunk::{Chunk, Parser};
-pub use header::{Header, Format, Division};
+pub use header::{Division, Format, Header};
