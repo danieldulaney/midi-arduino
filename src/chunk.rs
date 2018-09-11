@@ -1,6 +1,4 @@
-extern crate byteorder;
-
-use self::byteorder::{BigEndian, ByteOrder};
+use byteorder::{BigEndian, ByteOrder};
 
 use std::iter::Iterator;
 
@@ -23,12 +21,12 @@ impl ChunkKind {
 
 #[derive(Debug)]
 pub struct Chunk<'d> {
-    kind: ChunkKind,
-    data: &'d [u8],
+    pub kind: ChunkKind,
+    pub data: &'d [u8],
 }
 
 impl<'d> Chunk<'d> {
-    fn from_data(data: &'d [u8]) -> Result<Chunk<'d>, String> {
+    pub fn from_data(data: &'d [u8]) -> Result<Chunk<'d>, String> {
         println!("Getting chunk from data length {}", data.len());
 
         if data.len() < 8 {
