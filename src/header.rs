@@ -3,9 +3,9 @@ use chunk::{Chunk, ChunkKind};
 
 #[derive(Debug, PartialEq)]
 pub struct Header {
-    format: Format,
-    tracks: u16,
-    division: Division,
+    pub format: Format,
+    pub tracks: u16,
+    pub division: Division,
 }
 
 #[derive(Debug, PartialEq)]

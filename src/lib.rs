@@ -1,8 +1,8 @@
 extern crate byteorder;
 
-mod chunk;
-mod header;
+pub mod chunk;
+pub mod header;
 mod varlen;
 
-pub use chunk::Chunk;
-pub use chunk::Parser;
+pub use chunk::{Chunk, Parser};
+pub use header::{Header, Format, Division};

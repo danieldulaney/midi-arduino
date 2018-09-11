@@ -1,6 +1,6 @@
 extern crate midi_arduino;
 
-use midi_arduino::Parser;
+use midi_arduino::{Parser, Header, Format, Division};
 
 static SWEET_VICTORY_DATA: &'static [u8] = include_bytes!("data/sweet_victory.mid");
 
@@ -9,6 +9,16 @@ fn sweet_victory() {
     let data = SWEET_VICTORY_DATA.to_vec();
 
     let mut parser = Parser::new(&data);
+
+    let header_chunk = parser.next().unwrap();
+    let header = Header::from_chunk(header_chunk);
+
+    println!("{:?}", header);
+    assert_eq!(header, Header {
+        format: Format::SimultaneousTrack,
+        tracks: 18,
+        division: Division::QuarterTicks(480),
+    });
 
     for chunk in parser {
         println!("Type: {:?}, Length: {:?}", chunk.kind(), chunk.data_len());
